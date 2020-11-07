@@ -49,14 +49,14 @@ try {
     indices.forEach(index => {
         fs.writeFileSync(index.path, index.data);
     });
-    
+
 } catch (error) {
     core.setFailed(error.message);
 }
 
-function edit_index(index_path, callback){
+function edit_index(file_path, callback){
     var index;
-    var index_path = path.join(path.dirname(path), 'index.json');
+    var index_path = path.join(path.dirname(file_path), 'index.json');
 
     var search = _.findIndex(indices, { 'path': index_path }); 
     if (search + 1) {
