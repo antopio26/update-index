@@ -11,7 +11,9 @@ try {
     const timestamp = commit.timestamp;
 
     var index_path = path.join(path.dirname(paths[0]), 'index.json');
-    console.log(index_path)
+    console.log(paths[0]);
+    console.log(path.dirname(paths[0]));
+    console.log(index_path);
 
     var index = fs.readFileSync(index_path);
 
