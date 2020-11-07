@@ -47,7 +47,7 @@ try {
     });*/ // HASHING
 
     indices.forEach(index => {
-        fs.writeFileSync(index.path, index.data);
+        fs.writeFileSync(index.path, JSON.stringify(index.data));
     });
 
 } catch (error) {
