@@ -4,17 +4,13 @@ const path = require('path');
 const fs = require('fs');
 
 try {
-    const paths = core.getInput('paths');
+    const paths = JSON.Parse(core.getInput('paths'));
     const payload = github.context.payload;
     const commit = payload.commits[0];
     const author = commit.author.name;
     const timestamp = commit.timestamp;
 
     var index_path = path.join(path.dirname(paths[0]), 'index.json');
-    console.log(paths[0]);
-    console.log(path.dirname(paths[0]));
-    console.log(index_path);
-
     var index = fs.readFileSync(index_path);
 
     console.log(`Author name: ${author}`)
