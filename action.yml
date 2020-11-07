@@ -1,0 +1,14 @@
+name: 'Update Index'
+description: 'Update index file according to newly created article'
+inputs:
+  path:  # id of input
+    description: 'Path to index.json folder'
+    required: true
+    default: './'
+runs:
+  using: 'node12'
+  main: 'index.js'
+
+  # outputs:
+  # time: # id of output
+  #   description: 'The time generation is done'
