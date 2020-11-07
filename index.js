@@ -10,7 +10,7 @@ try {
     const author = commit.author.name;
     const timestamp = commit.timestamp;
 
-    var index_path = path.join(path.dirname(paths[0]), 'index.js');
+    var index_path = path.join(path.dirname(paths[0]), 'index.json');
     var index = fs.readFileSync(index_path);
 
     console.log(`Author name: ${author}`)
