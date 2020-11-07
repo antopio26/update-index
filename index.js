@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 try {
-    const paths = JSON.Parse(core.getInput('paths'));
+    const paths = JSON.parse(core.getInput('paths'));
     const payload = github.context.payload;
     const commit = payload.commits[0];
     const author = commit.author.name;
