@@ -1,22 +1,75 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+
+const _ = require('lodash');
 const path = require('path');
 const fs = require('fs');
 
+var indices = [];
+
 try {
-    const paths = JSON.parse(core.getInput('paths'));
-    const payload = github.context.payload;
-    const commit = payload.commits[0];
-    const author = commit.author.name;
-    const timestamp = commit.timestamp;
+    const added = JSON.parse(core.getInput('added'));
+    const removed = JSON.parse(core.getInput('removed'));
+    const modified = JSON.parse(core.getInput('modified'));
 
-    var index_path = path.join(path.dirname(paths[0]), 'index.json');
-    var index = fs.readFileSync(index_path);
+    const commit = github.context.payload.commits[0];
+    const _author = commit.author.name;
+    const _timestamp = commit.timestamp;
 
-    console.log(`Author name: ${author}`)
-    console.log(`Date: ${timestamp}`)
-    console.log(`Files: ${path}`)
-    console.log(`Index content: ${index}`)
+    added.forEach(_path => {
+        edit_index(_path, index => {
+            var article = {
+                // Title, Images
+                path: _path,
+                author: _author,
+                timestamp: _timestamp
+                // Add hash to optimize loading or maybe use timestamp
+            };
+
+            index.push(article);
+            return index;
+        });
+    });
+
+    removed.forEach(_path => {
+        edit_index(_path, index => {
+            var rem = _.findIndex(index, { path: _path });
+            index = _.pullAt(index, [rem]);
+            
+            return index;
+        });
+    });
+
+    /*edited.forEach(_path => {
+        edit_index(_path, index => {
+
+        });
+    });*/ // HASHING
+
+    indices.forEach(index => {
+        fs.writeFileSync(index.path, index.data);
+    });
+    
 } catch (error) {
     core.setFailed(error.message);
+}
+
+function edit_index(index_path, callback){
+    var index;
+    var index_path = path.join(path.dirname(path), 'index.json');
+
+    var search = _.findIndex(indices, { 'path': index_path }); 
+    if (search + 1) {
+        index = indices[search].data;
+    } else {
+        index = JSON.parse(fs.readFileSync(index_path));
+    }
+
+    index = callback(index);
+
+    if (search + 1) {
+        indices[search].data = index;
+    } else {
+        indices.push({ path: index_path, data: index });
+    }
 }

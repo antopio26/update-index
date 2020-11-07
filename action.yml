@@ -1,8 +1,16 @@
 name: 'Update Index'
 description: 'Update index file according to newly created article'
 inputs:
-  paths:  # id of input
-    description: 'Paths to changed articles'
+  added:
+    description: 'Paths to added articles'
+    required: true
+    default: '[]'
+  removed:
+    description: 'Paths to removed articles'
+    required: true
+    default: '[]'
+  modified:
+    description: 'Paths to modified articles'
     required: true
     default: './'
 runs:
