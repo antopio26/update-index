@@ -10,6 +10,6 @@ Update index file according to newly created article for md server
 
 ## Example usage
 
-uses: actions/update-index@v1
+uses: antopio26/update-index@v1
 with:
   path: './bacheca'
