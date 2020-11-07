@@ -2,7 +2,7 @@ name: 'Update Index'
 description: 'Update index file according to newly created article'
 inputs:
   path:  # id of input
-    description: 'Path to index.json folder'
+    description: 'Path to changed articles'
     required: true
     default: './'
 runs:
