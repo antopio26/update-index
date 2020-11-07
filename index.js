@@ -11,12 +11,14 @@ try {
     const timestamp = commit.timestamp;
 
     var index_path = path.join(path.dirname(paths[0]), 'index.json');
+    console.log(index_path)
+
     var index = fs.readFileSync(index_path);
 
     console.log(`Author name: ${author}`)
     console.log(`Date: ${timestamp}`)
     console.log(`Files: ${path}`)
-    console.log(`Index content: ${path}`)
+    console.log(`Index content: ${index}`)
 } catch (error) {
     core.setFailed(error.message);
 }
