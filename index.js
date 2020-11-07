@@ -34,8 +34,9 @@ try {
     removed.forEach(_path => {
         edit_index(_path, index => {
             var rem = _.findIndex(index, { path: _path });
-            index = _.pullAt(index, [rem]);
-            
+            if(rem + 1) {
+                index = _.pullAt(index, [rem]);
+            }
             return index;
         });
     });
@@ -45,6 +46,8 @@ try {
 
         });
     });*/ // HASHING
+
+    // ERROR DELETING UNREGISTERED FILE CAUSES JSON TO GO NULL
 
     indices.forEach(index => {
         fs.writeFileSync(index.path, JSON.stringify(index.data));
