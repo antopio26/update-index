@@ -36,7 +36,7 @@ try {
                 // Add hash to optimize loading or maybe use timestamp
             };
 
-            index.push(article);
+            index.unshift(article);
             return index;
         });
     });
@@ -60,8 +60,6 @@ try {
     });*/ // HASHING
 
     // ERROR DELETING UNREGISTERED FILE CAUSES JSON TO GO NULL
-
-    console.log(indices[0].data);
 
     indices.forEach(index => {
         fs.writeFileSync(index.path, JSON.stringify(index.data));
