@@ -16,8 +16,8 @@ try {
     const _author = commit.author.name;
     const _timestamp = commit.timestamp;
 
-    const titleRe = /^[^#\n\r]{1,200} /gm;
-    const paragraphRe = /^# [\n\r\[\]]+/gm;
+    const titleRe = /^# [\n\r\[\]]+/gm;
+    const paragraphRe = /^[^#\n\r]{1,200} /gm;
 
     added.forEach(_path => {
         var text = fs.readFileSync(_path);
