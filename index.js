@@ -61,6 +61,8 @@ try {
 
     // ERROR DELETING UNREGISTERED FILE CAUSES JSON TO GO NULL
 
+    console.log(indices);
+
     indices.forEach(index => {
         fs.writeFileSync(index.path, JSON.stringify(index.data));
     });
