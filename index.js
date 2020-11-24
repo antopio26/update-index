@@ -16,13 +16,23 @@ try {
     const _author = commit.author.name;
     const _timestamp = commit.timestamp;
 
+    const titleRe = /^[^#\n\r]{1,200} /gm;
+    const paragraphRe = /^# [\n\r\[\]]+/gm;
+
     added.forEach(_path => {
+        var text = fs.readFileSync(_path);
+
+        var _title = titleRe.exec(text);
+        var _tease = paragraphRe.exec(text);
+        
         edit_index(_path, index => {
             var article = {
-                // Title, Images
+                // Images
                 path: _path,
+                title: _title,
                 author: _author,
-                timestamp: _timestamp
+                timestamp: new Date(_timestamp),
+                tease: _tease
                 // Add hash to optimize loading or maybe use timestamp
             };
 
@@ -40,6 +50,8 @@ try {
             return index;
         });
     });
+
+    // TODO: MODIFY TITLE, TIMESTAM, TEASE
 
     /*edited.forEach(_path => {
         edit_index(_path, index => {
