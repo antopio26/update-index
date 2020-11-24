@@ -45,7 +45,7 @@ try {
         edit_index(_path, index => {
             var rem = _.findIndex(index, { path: _path });
             if(rem + 1) {
-                index = _.pullAt(index, [rem]);
+                _.pullAt(index, [rem]);
             }
             return index;
         });
