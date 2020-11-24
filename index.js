@@ -22,8 +22,8 @@ try {
     added.forEach(_path => {
         var text = fs.readFileSync(_path);
 
-        var _title = titleRe.exec(text);
-        var _tease = paragraphRe.exec(text);
+        var _title = titleRe.exec(text)[0].substring(2);
+        var _tease = paragraphRe.exec(text)[0];
         
         edit_index(_path, index => {
             var article = {
