@@ -17,22 +17,25 @@ try {
     const _timestamp = commit.timestamp;
 
     const titleRe = /^# [^\n\r\[\]]+/gm;
-    const paragraphRe = /^[^#\n\r]{1,200} /gm;
+    const paragraphRe = /^[^#\n\r]{1,150}[., ]/gm;
+    const imgRe = /^!\[[\w\W]*\]\(([\w\W]+) "[\w\W]+"\)/gm;
 
     added.forEach(_path => {
         var text = fs.readFileSync(_path);
 
         var _title = titleRe.exec(text)[0].substring(2);
         var _tease = paragraphRe.exec(text)[0];
+        var _image = imgRe.exec(text) || [null, null];
         
         edit_index(_path, index => {
             var article = {
-                // Images
+                // Images // ID
                 path: _path,
                 title: _title,
                 author: _author,
-                timestamp: new Date(_timestamp),
-                tease: _tease
+                timestamp: _timestamp,
+                tease: _tease,
+                img: _image[1]
                 // Add hash to optimize loading or maybe use timestamp
             };
 
@@ -46,18 +49,36 @@ try {
             var rem = _.findIndex(index, { path: _path });
             if(rem + 1) {
                 _.pullAt(index, [rem]);
+                return index;
+            } else {
+                throw `ERROR REMOVING: ${_path} not found in index`;
             }
-            return index;
         });
     });
 
-    // TODO: MODIFY TITLE, TIMESTAM, TEASE
+    // TODO: flag modified
 
-    /*edited.forEach(_path => {
+    edited.forEach(_path => {
         edit_index(_path, index => {
+            var edt = _.findIndex(index, { path: _path });
 
+            if(edt + 1) {
+                var text = fs.readFileSync(_path);
+
+                var _title = titleRe.exec(text)[0].substring(2);
+                var _tease = paragraphRe.exec(text)[0];
+                var _image = imgRe.exec(text) || [null, null];
+
+                index[edt].title = _title;
+                index[edt].tease = _tease;
+                index[edt].image = _image[1];
+
+                return index;
+            } else {
+                throw `ERROR UPDATING: ${_path} not found in index`;
+            }
         });
-    });*/ // HASHING
+    }); // HASHING
 
     // ERROR DELETING UNREGISTERED FILE CAUSES JSON TO GO NULL
 
