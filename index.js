@@ -58,7 +58,7 @@ try {
 
     // TODO: flag modified
 
-    edited.forEach(_path => {
+    modified.forEach(_path => {
         edit_index(_path, index => {
             var edt = _.findIndex(index, { path: _path });
 
