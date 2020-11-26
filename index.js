@@ -18,7 +18,7 @@ try {
 
     const titleRe = /^# [^\n\r\[\]]+/gm;
     const paragraphRe = /^[^#\n\r]{1,150}[., ]/gm;
-    const imgRe = /^!\[[\w\W]*\]\(([\w\W]+) "[\w\W]+"\)/gm;
+    const imgRe = /^!\[[\w\W]*\]\(([\w\W]+) "[\w\W]*"\)$/gm;
 
     added.forEach(_path => {
         var text = fs.readFileSync(_path);
