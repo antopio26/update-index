@@ -71,7 +71,7 @@ try {
 
                 index[edt].title = _title;
                 index[edt].tease = _tease;
-                index[edt].image = _image[1];
+                index[edt].img = _image[1];
 
                 return index;
             } else {
